@@ -1,0 +1,124 @@
+# ============================================================
+# Ghostty 配置
+# 重载：Cmd+Shift+,    查看全部选项和文档：ghostty +show-config --default --docs
+# 列出主题：ghostty +list-themes    校验：ghostty +validate-config
+#
+# 注意：Ghostty 不支持行尾注释，说明都写在选项上一行。
+# 下面除两项生效外全部注释，注释里写的是默认值，想改就取消注释再改。
+# ============================================================
+
+# ---------- 字体 ----------
+# 生效：p10k 需要 Nerd Font，否则提示符图标是方块
+font-family = MesloLGS NF
+# font-size = 13
+# true 让字体加粗一点，macOS 上更接近 iTerm2 观感
+# font-thicken = false
+# 关闭连字；多个 feature 写多行
+# font-feature = -liga
+# 行高微调，如 10%
+# adjust-cell-height = 0%
+
+# ---------- 主题 / 颜色 ----------
+# 单一主题
+theme = Jellybeans
+# 跟随系统深浅自动切换
+# theme = light:iTerm2 Light Background,dark:iTerm2 Dark Background
+# 背景透明度 0~1
+background-opacity = 1
+# 背景模糊：true 或数字（模糊半径），配合透明度用
+# background-blur = false
+# 文字与背景最低对比度 1~21
+# minimum-contrast = 1
+# 非焦点分屏变暗程度
+unfocused-split-opacity = 0.8
+# 粗体是否用亮色显示
+# bold-is-bright = false
+
+# ---------- 光标 ----------
+# block / bar / underline / block_hollow
+cursor-style = bar
+# 空=跟随终端程序设置；true / false 强制
+cursor-style-blink = false
+
+# ---------- 鼠标 / 剪贴板 ----------
+# true=选中复制到"选择缓冲"；clipboard=直接进系统剪贴板；false 关闭
+copy-on-select = true
+# 粘贴含换行等危险内容时提示
+# clipboard-paste-protection = true
+# 打字时隐藏鼠标指针
+# mouse-hide-while-typing = false
+# Cmd+Click 打开链接
+link-url = true
+
+# ---------- 滚动 ----------
+# 回滚缓冲字节数，约 10MB
+# scrollback-limit = 10000000
+
+# ---------- 窗口 ----------
+# always 每次退出保存窗口布局；never 不保存
+window-save-state = always
+# 新标签 / 分屏继承当前目录
+window-inherit-working-directory = true
+# 新窗口起始目录：home 或绝对路径
+working-directory = ~/Code
+# 初始列数 / 行数，0=系统默认
+# window-width = 0
+# window-height = 0
+# window-padding-x = 2
+# window-padding-y = 2
+# current 在当前标签后新建；end 放最后
+# window-new-tab-position = current
+# none 去掉标题栏
+# window-decoration = auto
+# 关闭有运行进程的标签时确认
+confirm-close-surface = true
+# native / transparent / tabs（标签栏并入标题栏）/ hidden
+macos-titlebar-style = tabs
+macos-window-shadow = true
+# true 用非原生全屏，不新建 Space，切换更快
+macos-non-native-fullscreen = true
+
+# ---------- macOS 按键 ----------
+# 空=Option 输入特殊字符（同 iTerm2 Normal）；true / left / right 把 Option 当 Alt
+# macos-option-as-alt =
+
+# ---------- Shell 集成 ----------
+# detect / zsh / bash / fish / none
+# shell-integration = detect
+# 生效：ssh 时把 TERM 设为 xterm-256color，远端服务器不报 unknown terminal
+# 可叠加的其他特性，逗号分隔，前缀 no- 关闭：
+#   cursor（提示符处光标变竖线）, sudo, title,
+#   ssh-terminfo（往远端 ~/.terminfo 写 xterm-ghostty，借用服务器慎用）
+shell-integration-features = ssh-env
+# 改成 xterm-256color 可一刀切解决远端兼容，但会丢部分 Ghostty 特性
+# term = xterm-ghostty
+
+# ---------- 快速终端（下拉式） ----------
+# Cmd+` 在任意 App 下呼出 / 隐藏，首次需授予"辅助功能"权限
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+# top / bottom / left / right / center
+# quick-terminal-position = bottomleft
+quick-terminal-screen = mouse
+quick-terminal-position = right
+quick-terminal-size = 30%
+
+# ---------- 常用快捷键（默认已与 iTerm2 一致，要改再取消注释） ----------
+# keybind = cmd+d=new_split:right
+# keybind = cmd+shift+d=new_split:down
+# keybind = cmd+t=new_tab
+# keybind = cmd+w=close_surface
+# 放大 / 还原当前分屏
+# keybind = cmd+shift+enter=toggle_split_zoom
+# keybind = cmd+alt+left=goto_split:left
+# keybind = cmd+alt+right=goto_split:right
+# keybind = cmd+plus=increase_font_size:1
+# keybind = cmd+minus=decrease_font_size:1
+# keybind = cmd+zero=reset_font_size
+# keybind = cmd+k=clear_screen
+# keybind = cmd+shift+comma=reload_config
+
+# ---------- 其他 ----------
+# off / check / download
+auto-update = download
+# 固定窗口标题，空=由 shell 控制
+# title =
