@@ -1,0 +1,10 @@
+# Claude Code 通用操作（跨机器一致）
+Shift+Tab — 循环权限模式(默认 / auto-accept / plan)
+! 开头跑 shell 输出进上下文;# 写记忆;@ 引用文件
+Esc 打断 Claude;连按两次 Esc 编辑上一条 / 回退
+/clear 清空上下文;/compact 手动压缩;长对话会自动 compact
+/config 可快改 theme·model;/fast 切 Opus 快速输出
+/code-review high — 深度查当前 diff 的 bug;ultra 走云端多 agent
+/simplify — 只清理改动(复用/简化/效率),不查 bug
+/loop 5m /foo — 每 5 分钟循环跑命令(轮询 / 盯 CI)
+提示由 chi_config/claude/cc-tips.sh 生成;可迁移条目在 claude/tips/,机器专属放 ~/.claude/tips.local/

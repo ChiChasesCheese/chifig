@@ -17,8 +17,12 @@ git clone https://github.com/ChiChasesCheese/chifig.git ~/chi_config && ~/chi_co
 | `zsh/chi.zsh` | fzf 键位、可选别名 | `~/.zshrc` 末尾 source |
 | `git/config` | delta 作 pager、默认分支 main | `git config --global include.path` |
 | `fonts/` | MesloLGS NF 四个字重（p10k 推荐字体） | 复制到 `~/Library/Fonts` |
+| `claude/cc-tips.sh` + `claude/tips/` | Claude Code 状态栏提示轮换（Ghostty 快捷键、CC 操作） | **不自动安装**，见 `claude/HANDOFF.md` 由该机器的 Claude 手动接入 |
 
 ## 不在仓库里的
+
+- `~/.claude/` 下的任何配置。`install.sh` 不碰它，状态栏提示按 `claude/HANDOFF.md` 手动接。
+- `~/.claude/tips.local/`：机器专属提示（skills、MCP、项目命令）。
 
 - `~/.zshrc` 本体（含各机器自己的 PATH、API key），仓库只追加一行 source。
 - git 的 user.name / user.email，各机器自己设。

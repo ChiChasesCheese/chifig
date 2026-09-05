@@ -1,0 +1,18 @@
+# Ghostty 快捷键（macOS 默认键位，来源 ghostty +list-keybinds --default）
+Ghostty: Cmd+D 左右分屏,Cmd+Shift+D 上下分屏
+Ghostty: Cmd+] / Cmd+[ 循环切换分屏,比 Cmd+Opt+方向少按一个键
+Ghostty: Cmd+Opt+方向键 按方位切换分屏
+Ghostty: Cmd+Ctrl+方向键 调整分屏大小,Cmd+Ctrl+= 全部等分
+Ghostty: Cmd+Shift+Enter 放大当前分屏,再按还原
+Ghostty: Cmd+W 关当前格,Cmd+Opt+W 关整个标签,Cmd+Z 撤销刚关掉的
+Ghostty: Cmd+1~8 跳到第 N 个标签,Cmd+9 跳最后一个
+Ghostty: Cmd+Shift+] / Cmd+Shift+[ 切下一个 / 上一个标签
+Ghostty: Cmd+↑ / Cmd+↓ 在历史提示符之间跳,长输出一跳到头
+Ghostty: Cmd+Shift+P 命令面板,忘了键位就搜
+Ghostty: Cmd+F 搜索,Cmd+G 下一个,Cmd+Shift+G 上一个,Cmd+E 直接搜选中文本
+Ghostty: Cmd+← / Cmd+→ 光标到行首 / 行尾,Cmd+Backspace 删到行首
+Ghostty: Cmd+K 清屏,Cmd+Enter 全屏,Cmd+N 新窗口
+Ghostty: Cmd+, 打开配置文件,Cmd+Shift+, 重载配置
+Ghostty: Cmd+Shift+J 把当前屏幕内容存成文件并粘贴路径,喂给 Claude 很方便
+Ghostty: Cmd+Opt+I 打开终端检查器,看按键序列和渲染细节
+Ghostty: 配置模板在 ~/chi_config/ghostty/config,全部选项已注释附默认值
