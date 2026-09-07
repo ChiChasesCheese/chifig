@@ -77,5 +77,5 @@ just unmanaged      # 本机装了但仓库没记录的 brew 包
 ## 运行时
 
 - Node 等：mise（`~/.config/mise/config.toml`，全局 `node = "lts"`，项目内 `.node-version` / `mise.toml` 覆盖）。
-- Python：uv（`uv python install 3.12`、`uv tool`、`uvx`）。conda 只保留一套给需要它的项目。
+- Python：uv（`uv python install 3.12 --default` 让 `python3` 指向 uv 管理的 3.12，`uv tool`、`uvx`）。conda 只保留一套给需要它的项目。
 - npm 全局包：`~/.config/chifig/npm-globals.txt`，chezmoi 在文件变化时补装。
