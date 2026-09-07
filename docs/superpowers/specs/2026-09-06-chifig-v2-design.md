@@ -46,7 +46,7 @@ chifig/
     │   ├── ghostty/config          [模块 ghostty]
     │   └── fish/config.fish        [模块 fish]
     ├── dot_claude/cc-tips.sh tips/ [模块 claude]
-    └── Library/Application Support/Cursor/User/{settings,keybindings}.json [模块 editor]
+    └── private_Library/private_Application Support/private_Cursor/User/{settings,keybindings}.json [模块 editor]
 ```
 
 ## 4. 机器差异模型
