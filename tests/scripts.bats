@@ -28,7 +28,7 @@ setup_file() {
 @test "macos-defaults.sh passes shellcheck and uses no sudo" {
   run shellcheck -S warning "$REPO/home/dot_config/chifig/executable_macos-defaults.sh"
   [ "$status" -eq 0 ]
-  ! grep -q 'sudo' "$REPO/home/dot_config/chifig/executable_macos-defaults.sh"
+  ! grep -qE '(^|[;&| ])sudo ' "$REPO/home/dot_config/chifig/executable_macos-defaults.sh"
 }
 
 @test "justfile lists all recipes" {

@@ -1,0 +1,39 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install test toolchain
+        run: brew install chezmoi just bats-core shellcheck gitleaks
+      - name: Lint (shellcheck + gitleaks + rendered scripts)
+        run: just lint
+      - name: Unit / render tests (temp HOME, all modules)
+        run: |
+          brew install starship zoxide atuin fzf mise uv antidote eza bat
+          just test
+      - name: End-to-end bootstrap into runner HOME (defaults, scripts included)
+        env:
+          CHIFIG_INIT_ARGS: --promptString git.name=CI --promptString git.email=ci@example.com --promptChoice role=personal --promptBool modules.ghostty=false --promptBool modules.claude=true --promptBool modules.editor=false --promptBool modules.gui=false --promptBool modules.fish=false --promptBool modules.macos=false
+        run: |
+          CHIFIG_REPO="$GITHUB_WORKSPACE" ./bootstrap.sh
+      - name: Verify applied state
+        run: |
+          chezmoi verify
+          test -f ~/.config/zsh/.zshrc
+          test -f ~/.config/git/config
+          grep -q 'name = CI' ~/.config/git/config
+          test -x ~/.claude/cc-tips.sh
+          echo '{}' | bash ~/.claude/cc-tips.sh | grep -q '💡'
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+          ZDOTDIR=~/.config/zsh zsh -ic 'print READY; whence -w starship_precmd _mise_hook' | tee /tmp/zsh.out
+          grep -q READY /tmp/zsh.out
+          ! grep -qi 'command not found' /tmp/zsh.out
+          mise ls node | grep -q lts || mise ls
+          mise exec -- node --version
+          mise exec -- npm ls -g ccstatusline
+          uv python list --only-installed | grep -q 3.12

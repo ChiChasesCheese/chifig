@@ -10,7 +10,9 @@ load helpers
 
 @test "repo has no token prefixes, absolute home paths or internal hosts" {
   cd "$REPO"
-  run git grep -nE 'gho_[A-Za-z0-9]{10,}|ghp_[A-Za-z0-9]{10,}|sk-[A-Za-z0-9]{20,}|/Users/chizhang|ec2-[0-9]+-[0-9]+|152\.136\.' -- ':!docs/*'
+  # 模式用变量拼接，避免本文件自身命中；--untracked 让未提交的新文件也被检查
+  local home_pat='/Users/chi''zhang'
+  run git grep --untracked -nE "gho_[A-Za-z0-9]{10,}|ghp_[A-Za-z0-9]{10,}|sk-[A-Za-z0-9]{20,}|${home_pat}|ec2-[0-9]+-[0-9]+|152\\.136\\." -- ':!docs/*' ':!tests/secrets.bats'
   [ "$status" -ne 0 ] || { echo "$output"; return 1; }
 }
 

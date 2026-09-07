@@ -42,7 +42,7 @@ chifig/
     │   ├── zsh/  .zshrc .zprofile .zsh_plugins.txt conf.d/*.zsh local.zsh.example
     │   ├── git/  config.tmpl ignore
     │   ├── tmux/tmux.conf  starship.toml  mise/config.toml  atuin/config.toml
-    │   ├── chifig/  Brewfile.core Brewfile.gui Brewfile.editor macos-defaults.sh npm-globals.txt
+    │   ├── chifig/  Brewfile.core.tmpl Brewfile.gui macos-defaults.sh npm-globals.txt cursor-extensions.txt
     │   ├── ghostty/config          [模块 ghostty]
     │   └── fish/config.fish        [模块 fish]
     ├── dot_claude/cc-tips.sh tips/ [模块 claude]
@@ -69,8 +69,8 @@ chifig/
 ## 5. 安装分层
 
 1. `bootstrap.sh`：装 Xcode CLT、Homebrew、chezmoi，然后 `chezmoi init --apply ChiChasesCheese/chifig`。整个脚本包在 `main()` 内，`set -euo pipefail`，可用 `CHIFIG_REF` 固定分支。
-2. chezmoi 脚本：`run_once_before` 确保 brew；`run_onchange_after` 在 Brewfile 内容变化时 `brew bundle`（core 总是；editor/gui 仅开关为真）；`run_onchange_after` 在 mise 配置变化时 `mise install` 并按 `npm-globals.txt` 装全局包。
-3. 显式触发：`just gui`（brew bundle Brewfile.gui）、`just macos`（跑 defaults 脚本）。永不自动执行。
+2. chezmoi 脚本：`run_once_before` 确保 brew；`run_onchange_after` 在 `Brewfile.core` 或模块开关变化时 `brew bundle` core；`run_onchange_after` 在 mise 配置或 `npm-globals.txt` 变化时 `mise install`、`uv python install 3.12`、补装 npm 全局包。
+3. 显式触发：`just gui`（brew bundle Brewfile.gui）、`just macos`（跑 defaults 脚本）、`just editor`（Cursor 装扩展清单）。永不自动执行。模块开关只决定清单文件是否落地。
 
 ## 6. Secrets
 
