@@ -1,0 +1,37 @@
+{{- /* chezmoi init 时提问一次（提示文字即数据路径，便于 --promptString git.name=... 精确匹配），答案写入 ~/.config/chezmoi/chezmoi.toml（不入库）。
+       非交互：chezmoi init --promptDefaults 或 --promptString git.name=... --promptBool modules.gui=true */ -}}
+{{- $name := promptStringOnce . "git.name" "git.name" -}}
+{{- $email := promptStringOnce . "git.email" "git.email" -}}
+{{- $role := promptChoiceOnce . "role" "role" (list "personal" "work") "personal" -}}
+{{- $ghostty := promptBoolOnce . "modules.ghostty" "modules.ghostty" true -}}
+{{- $claude := promptBoolOnce . "modules.claude" "modules.claude" true -}}
+{{- $editor := promptBoolOnce . "modules.editor" "modules.editor" false -}}
+{{- $gui := promptBoolOnce . "modules.gui" "modules.gui" false -}}
+{{- $fish := promptBoolOnce . "modules.fish" "modules.fish" false -}}
+{{- $macos := promptBoolOnce . "modules.macos" "modules.macos" false -}}
+
+# 记录源目录：bootstrap 用本地路径 init 时，后续 chezmoi 命令也能找到源
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
+[data]
+    role = {{ $role | quote }}
+
+[data.git]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+
+[data.modules]
+    ghostty = {{ $ghostty }}
+    claude = {{ $claude }}
+    editor = {{ $editor }}
+    gui = {{ $gui }}
+    fish = {{ $fish }}
+    macos = {{ $macos }}
+
+[diff]
+    command = "delta"
+    pager = "delta"
+
+[git]
+    autoCommit = false
+    autoPush = false

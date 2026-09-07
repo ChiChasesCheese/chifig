@@ -1,0 +1,23 @@
+#!/bin/bash
+# mise 配置或 npm 全局清单变化时：装运行时、装 Python、补齐 npm 全局包
+# mise: {{ include "dot_config/mise/config.toml" | sha256sum }}
+# npm-globals: {{ include "dot_config/chifig/npm-globals.txt" | sha256sum }}
+set -euo pipefail
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH"
+command -v mise >/dev/null 2>&1 || { echo "chifig: mise missing, skip"; exit 0; }
+
+echo "==> chifig: mise install"
+mise install --yes
+
+if command -v uv >/dev/null 2>&1; then
+  echo "==> chifig: uv python install 3.12"
+  uv python install 3.12 --default --preview-features python-install-default
+fi
+
+echo "==> chifig: npm globals"
+while IFS= read -r pkg; do
+  case "$pkg" in ''|'#'*) continue ;; esac
+  if ! mise exec -- npm ls -g "$pkg" >/dev/null 2>&1; then
+    mise exec -- npm install -g "$pkg"
+  fi
+done < "$HOME/.config/chifig/npm-globals.txt"

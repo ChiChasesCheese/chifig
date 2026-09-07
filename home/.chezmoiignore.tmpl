@@ -1,0 +1,29 @@
+# 永不管理：本机密钥
+.config/zsh/local.zsh
+.config/fish/local.fish
+
+{{ if not .modules.ghostty -}}
+.config/ghostty
+{{ end -}}
+{{ if not .modules.claude -}}
+.claude
+{{ end -}}
+{{ if not .modules.editor -}}
+Library
+.config/chifig/cursor-extensions.txt
+{{ end -}}
+{{ if not .modules.gui -}}
+.config/chifig/Brewfile.gui
+{{ end -}}
+{{ if not .modules.fish -}}
+.config/fish
+{{ end -}}
+{{ if not .modules.macos -}}
+.config/chifig/macos-defaults.sh
+{{ end -}}
+{{ if ne .chezmoi.os "darwin" -}}
+Library
+.condarc
+.config/ghostty
+.config/chifig/macos-defaults.sh
+{{ end -}}

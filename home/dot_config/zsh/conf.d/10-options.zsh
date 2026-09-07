@@ -1,0 +1,8 @@
+# zsh 行为
+setopt AUTO_CD AUTO_PUSHD PUSHD_IGNORE_DUPS
+setopt EXTENDED_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS SHARE_HISTORY INC_APPEND_HISTORY
+setopt INTERACTIVE_COMMENTS NO_BEEP
+bindkey -e
+# 单词跳转：Alt+←/→
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word

@@ -1,0 +1,48 @@
+# chifig core：通用开发工具，每台 Mac 都装。项目专属包不放这里。
+# 应用：brew bundle --file ~/.config/chifig/Brewfile.core --no-upgrade（chezmoi 在文件变化时自动跑）
+
+# dotfiles / 任务 / 运行时
+brew "git"
+brew "gh"
+brew "chezmoi"
+brew "just"
+brew "mise"
+brew "uv"
+
+# shell
+brew "antidote"
+brew "starship"
+brew "zoxide"
+brew "atuin"
+brew "fzf"
+{{- if .modules.fish }}
+brew "fish"
+{{- end }}
+
+# 现代 CLI
+brew "ripgrep"
+brew "fd"
+brew "bat"
+brew "eza"
+brew "git-delta"
+brew "difftastic"
+brew "jq"
+brew "btop"
+brew "yazi"
+brew "lazygit"
+brew "tmux"
+brew "tealdeer"
+brew "hyperfine"
+brew "tree"
+brew "wget"
+
+# 测试与安全（仓库自检用）
+brew "bats-core"
+brew "shellcheck"
+brew "gitleaks"
+
+# 字体（Ghostty / 编辑器）
+cask "font-jetbrains-mono-nerd-font"
+{{- if .modules.ghostty }}
+cask "ghostty"
+{{- end }}

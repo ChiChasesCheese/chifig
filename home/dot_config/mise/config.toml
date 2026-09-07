@@ -1,0 +1,6 @@
+# 全局运行时（项目内 mise.toml / .node-version 会覆盖）
+[tools]
+node = "lts"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
