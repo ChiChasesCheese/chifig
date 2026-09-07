@@ -30,8 +30,10 @@ jobs:
           test -x ~/.claude/cc-tips.sh
           echo '{}' | bash ~/.claude/cc-tips.sh | grep -q '💡'
           eval "$(/opt/homebrew/bin/brew shellenv)"
-          ZDOTDIR=~/.config/zsh zsh -ic 'print READY; whence -w starship_precmd _mise_hook' | tee /tmp/zsh.out
+          ZDOTDIR=~/.config/zsh zsh -ic 'print READY; print -l $precmd_functions' | tee /tmp/zsh.out
           grep -q READY /tmp/zsh.out
+          grep -q starship_precmd /tmp/zsh.out
+          grep -q _mise_hook_precmd /tmp/zsh.out
           ! grep -qi 'command not found' /tmp/zsh.out
           mise ls node | grep -q lts || mise ls
           mise exec -- node --version

@@ -34,13 +34,14 @@ setup_file() {
 @test "interactive zsh wires starship zoxide atuin mise aliases" {
   run env -i HOME="$DEST/home" ZDOTDIR="$DEST/home/.config/zsh" PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
       TERM=xterm-256color LANG=en_US.UTF-8 XDG_CACHE_HOME="$BATS_FILE_TMPDIR/cache" \
-      zsh -ic 'whence -w __zoxide_z starship_precmd _atuin_precmd _mise_hook | tr "\n" " "; alias ls; alias cat'
+      zsh -ic 'print -l $precmd_functions | tr "\n" " "; whence -w __zoxide_z | tr "\n" " "; alias ls; alias cat'
   echo "$output"
   [ "$status" -eq 0 ]
   [[ "$output" == *"__zoxide_z: function"* ]]
-  [[ "$output" == *"starship_precmd: function"* ]]
-  [[ "$output" == *"_atuin_precmd: function"* ]]
-  [[ "$output" == *"_mise_hook: function"* ]]
+  # starship 1.26+ 的 precmd 叫 prompt_starship_precmd，旧版叫 starship_precmd；都接受
+  [[ "$output" == *"starship_precmd"* ]]
+  [[ "$output" == *"_atuin_precmd"* ]]
+  [[ "$output" == *"_mise_hook_precmd"* ]]
   [[ "$output" == *"eza"* ]]
   [[ "$output" == *"bat"* ]]
 }
