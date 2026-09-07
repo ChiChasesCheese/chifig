@@ -35,7 +35,7 @@ setup_file() {
   cd "$REPO"
   run just --list
   [ "$status" -eq 0 ]
-  for r in bootstrap apply update diff test lint brew gui macos editor doctor; do
+  for r in bootstrap apply update diff test lint brew gui macos editor doctor backup unmanaged; do
     [[ "$output" == *"$r"* ]] || { echo "missing recipe $r"; return 1; }
   done
 }

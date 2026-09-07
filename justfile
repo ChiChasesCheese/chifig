@@ -8,13 +8,20 @@ default:
 bootstrap *ARGS:
     CHIFIG_REPO="{{justfile_directory()}}" CHIFIG_INIT_ARGS="{{ARGS}}" ./bootstrap.sh
 
-# 把仓库应用到 ~（含 run_onchange 脚本）
+# 把仓库应用到 ~（含 run_onchange 脚本）⚠️ 覆盖所有受管目标；先 just diff
 apply *ARGS:
     chezmoi apply {{ARGS}}
 
-# 拉取远端并应用
+# 拉取远端并应用 ⚠️ 覆盖所有受管目标；先 just diff
 update:
     chezmoi update
+
+# 把当前受管目标备份到 ~/.local/state/chifig-backup/<日期>/（接管一台新机前必跑）
+backup:
+    d=~/.local/state/chifig-backup/$(date +%F); mkdir -p "$d"; \
+    chezmoi managed --include=files | while read -r f; do \
+      [ -e "$HOME/$f" ] && mkdir -p "$d/$(dirname "$f")" && cp -p "$HOME/$f" "$d/$f"; \
+    done; true; echo "backup -> $d"; find "$d" -type f | wc -l
 
 # 查看将要发生的变更
 diff:
@@ -39,18 +46,21 @@ lint:
 brew:
     brew bundle --file ~/.config/chifig/Brewfile.core --no-upgrade
 
-# 安装 GUI 应用清单（需要 modules.gui = true）
+# ⚠️ 安装 GUI 应用清单（数 GB 下载；需要 modules.gui = true）
 gui:
+    @echo "⚠️  将按 ~/.config/chifig/Brewfile.gui 安装 GUI 应用（含 Docker Desktop）"
     test -f ~/.config/chifig/Brewfile.gui || { echo "modules.gui 未开启：chezmoi edit-config 后 chezmoi apply"; exit 1; }
     brew bundle --file ~/.config/chifig/Brewfile.gui --no-upgrade
 
-# 应用 macOS 系统偏好（需要 modules.macos = true）
+# ⚠️ 应用 macOS 系统偏好并重启 Finder/Dock（需要 modules.macos = true；agent 用 just --yes macos）
+[confirm("⚠️  将修改 Finder/键盘/Dock/截图等系统偏好并重启 Finder 与 Dock，继续? (y/N)")]
 macos:
     test -x ~/.config/chifig/macos-defaults.sh || { echo "modules.macos 未开启"; exit 1; }
     ~/.config/chifig/macos-defaults.sh
 
-# 给 Cursor 装扩展清单（需要 modules.editor = true 且已装 cursor CLI）
+# ⚠️ 给 Cursor 装 20 个扩展（需要 modules.editor = true 且已装 cursor CLI）
 editor:
+    @echo "⚠️  将往 Cursor 安装 ~/.config/chifig/cursor-extensions.txt 里的扩展"
     test -f ~/.config/chifig/cursor-extensions.txt || { echo "modules.editor 未开启"; exit 1; }
     command -v cursor >/dev/null || { echo "cursor CLI 不在 PATH（Cursor → Shell Command: Install）"; exit 1; }
     grep -vE '^(#|$)' ~/.config/chifig/cursor-extensions.txt | xargs -n1 cursor --install-extension

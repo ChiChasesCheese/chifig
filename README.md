@@ -33,6 +33,10 @@ CHIFIG_INIT_ARGS='--promptString git.name=Chi --promptString git.email=me@exampl
 
 改开关：`chezmoi edit-config` 改 `[data.modules]`，然后 `chezmoi apply`。关掉的模块文件不会落地。
 
+## 给 Claude / agent
+
+仓库内 `CLAUDE.md` 是给在本仓库里工作的 Claude 的规则；`HANDOFF.md` 是给另一台 Mac 上的 Claude 的接入步骤。
+
 ## 目录
 
 ```
@@ -52,8 +56,20 @@ chezmoi diff        # 看差异
 chezmoi apply       # 应用
 just test           # 全部测试（不碰真实 ~）
 just lint           # shellcheck + gitleaks
-just unmanaged      # 本机装了但仓库没记录的 brew 包
+just backup         # 备份受管目标到 ~/.local/state/chifig-backup/<日期>/
+just unmanaged      # 本机装了但仓库没记录的 brew 包（只列出，不卸载）
 ```
+
+## ⚠️ 危险操作
+
+| 操作 | 影响 | 先做什么 |
+|---|---|---|
+| `chezmoi apply` / `chezmoi update` / `just apply` | 覆盖所有受管文件（zsh、git、tmux、ghostty、Cursor 设置） | `chezmoi diff`；新机先 `just backup` |
+| `just macos` | 改系统偏好，重启 Finder 与 Dock | 有交互确认；agent 用 `just --yes macos` |
+| `just gui` | 装 8 个 GUI 应用，数 GB | 确认 `Brewfile.gui` 清单 |
+| `just editor` | 往 Cursor 装 20 个扩展 | 确认 `cursor-extensions.txt` |
+| `chezmoi purge` / `init --purge` | 删源目录与状态 | 别用 |
+| `brew bundle cleanup` | 卸掉所有不在 Brewfile 里的包 | 别用，`just unmanaged` 只看不删 |
 
 ## 密钥与本机私有
 

@@ -1,7 +1,9 @@
 #!/bin/bash
-# chifig macOS 系统偏好。幂等，无 sudo，只改用户级 defaults。执行：just macos
+# ⚠️ chifig macOS 系统偏好：修改 Finder / 键盘 / Dock / 截图 / 保存面板，并重启 Finder 与 Dock。
+# 幂等，无 sudo，只改用户级 defaults；回滚用 `defaults delete <domain> <key>`。执行：just macos
 # 每条的 key 与取值参考 https://macos-defaults.com（2026 Tahoe 上验证过的条目）。
 set -euo pipefail
+echo "⚠️  chifig: 即将修改系统偏好并重启 Finder/Dock（Ctrl+C 可在 3 秒内取消）"; sleep 3
 
 echo "==> Finder"
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true        # 显示所有扩展名
