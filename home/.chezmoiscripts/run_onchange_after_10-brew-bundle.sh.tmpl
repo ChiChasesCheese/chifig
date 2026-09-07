@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# Brewfile.core 内容或模块开关变化时重跑 brew bundle（run_onchange 靠下面两行 hash 触发）
+# Brewfile.core: {{ include "dot_config/chifig/Brewfile.core.tmpl" | sha256sum }}
+# modules: {{ .modules | toJson | sha256sum }}
+set -euo pipefail
+if [ -x /opt/homebrew/bin/brew ]; then eval "$(/opt/homebrew/bin/brew shellenv)"; fi
+command -v brew >/dev/null 2>&1 || { echo "chifig: brew missing, skip bundle"; exit 0; }
+echo "==> chifig: brew bundle (core)"
+brew bundle --file="$HOME/.config/chifig/Brewfile.core" --no-upgrade
+{{ end -}}

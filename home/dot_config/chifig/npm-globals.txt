@@ -1,0 +1,4 @@
+# mise 管理的 node 下要有的全局 npm 包（一行一个）。chezmoi 在本文件变化时补装缺失项。
+ccstatusline
+claude-auto-retry
+repomix

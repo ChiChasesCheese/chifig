@@ -1,0 +1,70 @@
+# chifig git 配置（XDG 位置）。本机覆盖写 ~/.config/git/local（不入库）。
+{{- if .git.name }}
+[user]
+	name = {{ .git.name }}
+	email = {{ .git.email }}
+{{- end }}
+[init]
+	defaultBranch = main
+[core]
+	pager = delta
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+	tool = difftastic
+[difftool]
+	prompt = false
+[difftool "difftastic"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+	difftool = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+[push]
+	default = simple
+	autoSetupRemote = true
+	followTags = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[pull]
+	rebase = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[merge]
+	conflictstyle = zdiff3
+[rerere]
+	enabled = true
+	autoupdate = true
+[commit]
+	verbose = true
+[help]
+	autocorrect = prompt
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
+[alias]
+	st = status --short --branch
+	co = checkout
+	sw = switch
+	lg = log --oneline --graph --decorate -20
+	dft = difftool
+[include]
+	path = ~/.config/git/local

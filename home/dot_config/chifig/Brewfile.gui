@@ -1,0 +1,9 @@
+# chifig gui：GUI 应用清单，不自动安装。需要时：just gui
+cask "cursor"
+cask "visual-studio-code"
+cask "zed"
+cask "raycast"
+cask "karabiner-elements"
+cask "obsidian"
+cask "docker-desktop"
+cask "claude"

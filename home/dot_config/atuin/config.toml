@@ -1,0 +1,8 @@
+# atuin：本地 SQLite 历史，默认不同步（需要多机同步时 `atuin login` 后设置 auto_sync = true）
+auto_sync = false
+update_check = false
+style = "compact"
+inline_height = 20
+enter_accept = true
+filter_mode_shell_up_key = "session"
+search_mode = "fuzzy"

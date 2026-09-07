@@ -1,0 +1,4 @@
+# chifig zsh 入口（~/.config/zsh/.zshrc）。按文件名顺序加载 conf.d/，最后加载本机私有 local.zsh。
+for _f in "$ZDOTDIR"/conf.d/*.zsh(N); do source "$_f"; done
+unset _f
+[[ -f "$ZDOTDIR/local.zsh" ]] && source "$ZDOTDIR/local.zsh"

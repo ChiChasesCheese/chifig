@@ -9,7 +9,7 @@
 
 # ---------- 字体 ----------
 # 生效：p10k 需要 Nerd Font，否则提示符图标是方块
-font-family = MesloLGS NF
+font-family = JetBrainsMono Nerd Font
 # font-size = 13
 # true 让字体加粗一点，macOS 上更接近 iTerm2 观感
 # font-thicken = false

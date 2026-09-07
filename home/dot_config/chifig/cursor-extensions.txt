@@ -1,0 +1,21 @@
+# Cursor 扩展清单。安装：just editor（逐个 cursor --install-extension）
+anthropic.claude-code
+anysphere.cursorpyright
+anysphere.remote-containers
+anysphere.remote-ssh
+eamodio.gitlens
+esbenp.prettier-vscode
+github.codespaces
+github.remotehub
+ms-python.python
+ms-python.debugpy
+ms-python.mypy-type-checker
+ms-vscode.azure-repos
+ms-vscode.remote-repositories
+openai.chatgpt
+qiufeng.dailyline
+ritwickdey.liveserver
+snowflake.snowflake-vsc
+uctakeoff.vscode-counter
+vscjava.vscode-gradle
+wayou.vscode-todo-highlight
