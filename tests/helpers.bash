@@ -21,7 +21,9 @@ chifig_config() {
     esac
   done
   mkdir -p "$dest"
-  chezmoi execute-template --init "${args[@]}" \
+  # 空配置：避免 promptXOnce 沿用真实 ~/.config/chezmoi/chezmoi.toml 里的答案
+  : > "$dest/empty.toml"
+  chezmoi --config "$dest/empty.toml" --source "$REPO" execute-template --init "${args[@]}" \
     < "$REPO/home/.chezmoi.toml.tmpl" > "$dest/chezmoi.toml"
 }
 
