@@ -10,6 +10,9 @@
 {{- $fish := promptBoolOnce . "modules.fish" "modules.fish" false -}}
 {{- $macos := promptBoolOnce . "modules.macos" "modules.macos" false -}}
 
+# 记录源目录：bootstrap 用本地路径 init 时，后续 chezmoi 命令也能找到源
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
 [data]
     role = {{ $role | quote }}
 
