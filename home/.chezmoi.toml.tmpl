@@ -9,6 +9,7 @@
 {{- $gui := promptBoolOnce . "modules.gui" "modules.gui" false -}}
 {{- $fish := promptBoolOnce . "modules.fish" "modules.fish" false -}}
 {{- $macos := promptBoolOnce . "modules.macos" "modules.macos" false -}}
+{{- $keyboard := promptBoolOnce . "modules.keyboard" "modules.keyboard" false -}}
 
 # 记录源目录：bootstrap 用本地路径 init 时，后续 chezmoi 命令也能找到源
 sourceDir = {{ .chezmoi.sourceDir | quote }}
@@ -27,6 +28,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
     gui = {{ $gui }}
     fish = {{ $fish }}
     macos = {{ $macos }}
+    keyboard = {{ $keyboard }}
 
 [diff]
     command = "delta"

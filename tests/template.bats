@@ -8,13 +8,13 @@ setup() { DEST="$BATS_TEST_TMPDIR/d"; }
   run cat "$DEST/chezmoi.toml"
   [ "$status" -eq 0 ]
   [[ "$output" == *'role = "personal"'* ]]
-  for m in ghostty claude editor gui fish macos; do
+  for m in ghostty claude editor gui fish macos keyboard; do
     [[ "$output" == *"$m = "* ]]
   done
 }
 
 @test "all modules off: only core files land" {
-  chifig_apply "$DEST" modules.ghostty=false modules.claude=false modules.editor=false modules.gui=false modules.fish=false modules.macos=false
+  chifig_apply "$DEST" modules.ghostty=false modules.claude=false modules.editor=false modules.gui=false modules.fish=false modules.macos=false modules.keyboard=false
   H="$DEST/home"
   for f in .zshenv .condarc .config/zsh/.zshrc .config/zsh/.zprofile .config/zsh/.zsh_plugins.txt \
            .config/zsh/local.zsh.example .config/git/config .config/git/ignore .config/starship.toml \
@@ -23,21 +23,40 @@ setup() { DEST="$BATS_TEST_TMPDIR/d"; }
     [ -f "$H/$f" ] || { echo "missing $f"; return 1; }
   done
   for f in .config/ghostty .config/fish .claude Library .config/chifig/Brewfile.gui \
-           .config/chifig/macos-defaults.sh .config/chifig/cursor-extensions.txt; do
+           .config/chifig/macos-defaults.sh .config/chifig/cursor-extensions.txt .config/chifig/keyboard-remap.sh; do
     [ ! -e "$H/$f" ] || { echo "unexpected $f"; return 1; }
   done
 }
 
 @test "all modules on: optional files land" {
-  chifig_apply "$DEST" modules.ghostty=true modules.claude=true modules.editor=true modules.gui=true modules.fish=true modules.macos=true
+  chifig_apply "$DEST" modules.ghostty=true modules.claude=true modules.editor=true modules.gui=true modules.fish=true modules.macos=true modules.keyboard=true
   H="$DEST/home"
   for f in .config/ghostty/config .config/fish/config.fish .claude/cc-tips.sh .claude/tips/ghostty.txt \
            "Library/Application Support/Cursor/User/settings.json" "Library/Application Support/Cursor/User/keybindings.json" \
-           .config/chifig/Brewfile.gui .config/chifig/macos-defaults.sh .config/chifig/cursor-extensions.txt; do
+           .config/chifig/Brewfile.gui .config/chifig/macos-defaults.sh .config/chifig/cursor-extensions.txt \
+           .config/chifig/keyboard-remap.sh Library/LaunchAgents/com.chifig.keyboard-remap.plist; do
     [ -f "$H/$f" ] || { echo "missing $f"; return 1; }
   done
   [ -x "$H/.claude/cc-tips.sh" ]
   [ -x "$H/.config/chifig/macos-defaults.sh" ]
+  [ -x "$H/.config/chifig/keyboard-remap.sh" ]
+}
+
+@test "keyboard on, editor off: LaunchAgent lands without Cursor settings" {
+  chifig_apply "$DEST" modules.keyboard=true modules.editor=false
+  H="$DEST/home"
+  [ -f "$H/Library/LaunchAgents/com.chifig.keyboard-remap.plist" ]
+  [ ! -e "$H/Library/Application Support" ]
+  grep -q "/.config/chifig/keyboard-remap.sh</string>" "$H/Library/LaunchAgents/com.chifig.keyboard-remap.plist"
+  grep -q '<key>RunAtLoad</key>' "$H/Library/LaunchAgents/com.chifig.keyboard-remap.plist"
+}
+
+@test "editor on, keyboard off: Cursor settings land without LaunchAgent" {
+  chifig_apply "$DEST" modules.keyboard=false modules.editor=true
+  H="$DEST/home"
+  [ -f "$H/Library/Application Support/Cursor/User/settings.json" ]
+  [ ! -e "$H/Library/LaunchAgents" ]
+  [ ! -e "$H/.config/chifig/keyboard-remap.sh" ]
 }
 
 @test "git identity from init prompts renders into git config" {

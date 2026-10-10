@@ -7,7 +7,7 @@ export REPO
 chifig_config() {
   local dest="$1"; shift
   # 默认值（与 .chezmoi.toml.tmpl 一致），后面的参数覆盖前面的（bash 3.2 兼容，不用关联数组）
-  local defaults="git.name= git.email= role=personal modules.ghostty=true modules.claude=true modules.editor=false modules.gui=false modules.fish=false modules.macos=false"
+  local defaults="git.name= git.email= role=personal modules.ghostty=true modules.claude=true modules.editor=false modules.gui=false modules.fish=false modules.macos=false modules.keyboard=false"
   local args=() d k v kv found
   for d in $defaults; do
     k="${d%%=*}"; v="${d#*=}"

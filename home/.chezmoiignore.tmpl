@@ -9,8 +9,15 @@
 .claude
 {{ end -}}
 {{ if not .modules.editor -}}
-Library
+Library/Application Support
 .config/chifig/cursor-extensions.txt
+{{ end -}}
+{{ if not .modules.keyboard -}}
+Library/LaunchAgents
+.config/chifig/keyboard-remap.sh
+{{ end -}}
+{{ if and (not .modules.editor) (not .modules.keyboard) -}}
+Library
 {{ end -}}
 {{ if not .modules.gui -}}
 .config/chifig/Brewfile.gui
@@ -23,6 +30,7 @@ Library
 {{ end -}}
 {{ if ne .chezmoi.os "darwin" -}}
 Library
+.config/chifig/keyboard-remap.sh
 .condarc
 .config/ghostty
 .config/chifig/macos-defaults.sh

@@ -6,7 +6,7 @@
 
 1. git 的 `user.name` / `user.email`。
 2. 机器角色：`personal` 还是 `work`。
-3. 要开哪些模块（默认：ghostty ✅、claude ✅、editor ❌、gui ❌、fish ❌、macos ❌）。不确定就用默认。
+3. 要开哪些模块（默认：ghostty ✅、claude ✅、editor ❌、gui ❌、fish ❌、macos ❌、keyboard ❌）。不确定就用默认。接的是 Windows 键盘、想要 Alt→Cmd / Win→Ctrl 的开 keyboard。
 
 ## 1. 备份（必做）
 
@@ -27,7 +27,7 @@ cp -R ~/.config/zsh ~/.config/git ~/.config/tmux ~/.config/ghostty ~/.config/sta
 ## 3. 一条命令安装 ⚠️（会覆盖第 1 步备份的那些文件）
 
 ```sh
-CHIFIG_INIT_ARGS='--promptString git.name=<名字> --promptString git.email=<邮箱> --promptChoice role=personal --promptBool modules.ghostty=true --promptBool modules.claude=true --promptBool modules.editor=false --promptBool modules.gui=false --promptBool modules.fish=false --promptBool modules.macos=false' \
+CHIFIG_INIT_ARGS='--promptString git.name=<名字> --promptString git.email=<邮箱> --promptChoice role=personal --promptBool modules.ghostty=true --promptBool modules.claude=true --promptBool modules.editor=false --promptBool modules.gui=false --promptBool modules.fish=false --promptBool modules.macos=false --promptBool modules.keyboard=false' \
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ChiChasesCheese/chifig/main/bootstrap.sh)"
 ```
 
@@ -61,6 +61,7 @@ echo '{}' | bash ~/.claude/cc-tips.sh                 # 应输出一条 💡
 |---|---|---|
 | `just gui` | 按 `Brewfile.gui` 装 Cursor、VS Code、Zed、Raycast、Karabiner、Obsidian、Docker Desktop、Claude | 数 GB 下载 |
 | `just editor` | 给 Cursor 装 `cursor-extensions.txt` 里的 20 个扩展 | 覆盖不了已有扩展，安全但慢 |
+| `just keyboard apply` | Windows 键盘 Alt→Cmd、Win→Ctrl（需 `modules.keyboard=true`；LaunchAgent 登录时自动应用）。有内置键盘的 Mac 先 `just keyboard list` 把外接键盘 ID 写进 `~/.config/chifig/keyboard.local` | 别同时在系统设置「修饰键」里改同一把键盘 |
 | `just --yes macos` | 跑 `macos-defaults.sh`：Finder / 键盘重复 / Dock / 截图目录等，重启 Finder 与 Dock | 改系统偏好，部分需注销生效 |
 
 开关模块：`chezmoi edit-config` 改 `[data.modules]`，再 `chezmoi apply`。
