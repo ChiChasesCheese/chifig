@@ -48,6 +48,7 @@ git commit && git push          # 其他机器 chezmoi update
 | `just macos` | 改系统偏好并重启 Finder / Dock；部分需注销生效 | 有交互确认；agent 只能在用户明确要求时用 `just --yes macos` |
 | `just gui` | 下载安装 8 个 GUI 应用（含 Docker Desktop），数 GB | 仅用户要求时 |
 | `just editor` | 往 Cursor 装 20 个扩展 | 仅用户要求时 |
+| `just keyboard apply` | 改键盘修饰键映射（hidutil，可 `reset` 撤销） | 仅用户要求时；有内置键盘的机器必须先配 `keyboard.local` |
 | `chezmoi init --purge` / `chezmoi purge` | 删除源目录、配置与状态 | 不要用 |
 | `brew bundle cleanup` | 卸载所有不在 Brewfile 里的包（本机有 30+ 个未纳管包） | 不要用；用 `just unmanaged` 看清单 |
 | 删除 `~/.pyenv` | 本机 19 个项目 venv（含 quant）指向它，删了全坏 | 迁移到 uv 之前不动 |
@@ -57,7 +58,7 @@ git commit && git push          # 其他机器 chezmoi update
 
 ## 模块开关与机器差异
 
-`~/.config/chezmoi/chezmoi.toml` 的 `[data.modules]`：ghostty、claude 默认开；editor、gui、fish、macos 默认关。关掉的模块文件不落地。改开关：`chezmoi edit-config` 然后 `chezmoi apply`。`role`（personal / work）目前只是数据，留给以后按角色增减工具。
+`~/.config/chezmoi/chezmoi.toml` 的 `[data.modules]`：ghostty、claude 默认开；editor、gui、fish、macos、keyboard 默认关。keyboard 模块会装一个 LaunchAgent（`~/Library/LaunchAgents/com.chifig.keyboard-remap.plist`），关掉模块后要 `~/.config/chifig/keyboard-remap.sh uninstall` 才会卸载。关掉的模块文件不落地。改开关：`chezmoi edit-config` 然后 `chezmoi apply`。`role`（personal / work）目前只是数据，留给以后按角色增减工具。
 
 ## 测试怎么写
 

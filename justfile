@@ -65,6 +65,11 @@ editor:
     command -v cursor >/dev/null || { echo "cursor CLI 不在 PATH（Cursor → Shell Command: Install）"; exit 1; }
     grep -vE '^(#|$)' ~/.config/chifig/cursor-extensions.txt | xargs -n1 cursor --install-extension
 
+# 键盘修饰键重映射：Alt→Cmd、Win→Ctrl（需要 modules.keyboard = true）。不带参数=查看当前映射
+keyboard ACTION="status":
+    test -x ~/.config/chifig/keyboard-remap.sh || { echo "modules.keyboard 未开启：chezmoi edit-config 后 chezmoi apply"; exit 1; }
+    ~/.config/chifig/keyboard-remap.sh {{ACTION}}
+
 # 列出本机已装但未纳管的 brew 包（供人工决定去留）
 unmanaged:
     @comm -23 <(brew leaves | sort) <(grep -hoE '^brew "[^"]+"' ~/.config/chifig/Brewfile.* | cut -d'"' -f2 | sort)

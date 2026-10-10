@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- chifig 模块 keyboard：登录时和每 60 秒应用一次键盘映射（hidutil 映射在键盘拔插后会丢，定时重放最简单可靠） -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.chifig.keyboard-remap</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>{{ .chezmoi.homeDir }}/.config/chifig/keyboard-remap.sh</string>
+    <string>apply</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StartInterval</key>
+  <integer>60</integer>
+  <key>StandardErrorPath</key>
+  <string>{{ .chezmoi.homeDir }}/Library/Logs/chifig-keyboard.log</string>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>

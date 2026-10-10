@@ -1,0 +1,14 @@
+{{ if and (eq .chezmoi.os "darwin") .modules.keyboard -}}
+#!/bin/bash
+# 模块 keyboard：LaunchAgent 或映射脚本变化时重新加载（run_onchange 靠下面两行 hash 触发）
+# plist: {{ include "private_Library/LaunchAgents/com.chifig.keyboard-remap.plist.tmpl" | sha256sum }}
+# script: {{ include "dot_config/chifig/executable_keyboard-remap.sh" | sha256sum }}
+set -euo pipefail
+label=com.chifig.keyboard-remap
+plist="$HOME/Library/LaunchAgents/$label.plist"
+mkdir -p "$HOME/Library/Logs"
+echo "==> chifig: load $label"
+launchctl bootout "gui/$(id -u)/$label" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$plist"
+"$HOME/.config/chifig/keyboard-remap.sh" apply || echo "chifig: keyboard-remap apply failed (see message above)"
+{{ end -}}
