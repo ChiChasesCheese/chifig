@@ -18,7 +18,7 @@ jobs:
           just test
       - name: End-to-end bootstrap into runner HOME (defaults, scripts included)
         env:
-          CHIFIG_INIT_ARGS: --promptString git.name=CI --promptString git.email=ci@example.com --promptChoice role=personal --promptBool modules.ghostty=false --promptBool modules.claude=true --promptBool modules.editor=false --promptBool modules.gui=false --promptBool modules.fish=false --promptBool modules.macos=false
+          CHIFIG_INIT_ARGS: --promptString git.name=CI --promptString git.email=ci@example.com --promptChoice role=personal --promptBool modules.ghostty=false --promptBool modules.claude=true --promptBool modules.editor=false --promptBool modules.gui=false --promptBool modules.fish=false --promptBool modules.macos=false --promptBool modules.keyboard=false
         run: |
           CHIFIG_REPO="$GITHUB_WORKSPACE" ./bootstrap.sh
       - name: Verify applied state
