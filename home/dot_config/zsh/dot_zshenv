@@ -4,3 +4,5 @@ if [[ -z "$HOMEBREW_PREFIX" && -x /opt/homebrew/bin/brew ]]; then
 fi
 typeset -U path
 path=("$HOME/.local/bin" $path)
+# OrbStack 的 docker CLI(非交互 shell / launchd 拉起的脚本也要能找到)
+[[ -d "$HOME/.orbstack/bin" ]] && path+=("$HOME/.orbstack/bin")

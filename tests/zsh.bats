@@ -27,6 +27,13 @@ setup_file() {
   [[ "$output" == */opt/homebrew/bin/brew ]]
 }
 
+@test "non-interactive zsh adds OrbStack bin when present" {
+  mkdir -p "$DEST/home/.orbstack/bin"
+  run env -i HOME="$DEST/home" PATH="/usr/bin:/bin" zsh -c 'print -l $path'
+  rmdir "$DEST/home/.orbstack/bin" "$DEST/home/.orbstack"
+  [[ "$output" == *"$DEST/home/.orbstack/bin"* ]]
+}
+
 @test "interactive zsh starts cleanly in temp HOME" {
   run env -i HOME="$DEST/home" ZDOTDIR="$DEST/home/.config/zsh" PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
       TERM=xterm-256color LANG=en_US.UTF-8 XDG_CACHE_HOME="$BATS_FILE_TMPDIR/cache" \
