@@ -16,7 +16,7 @@ setup() { DEST="$BATS_TEST_TMPDIR/d"; }
 @test "all modules off: only core files land" {
   chifig_apply "$DEST" modules.ghostty=false modules.claude=false modules.editor=false modules.gui=false modules.fish=false modules.macos=false modules.keyboard=false
   H="$DEST/home"
-  for f in .zshenv .condarc .config/zsh/.zshrc .config/zsh/.zprofile .config/zsh/.zsh_plugins.txt \
+  for f in .zshenv .config/zsh/.zshenv .condarc .config/zsh/.zshrc .config/zsh/.zprofile .config/zsh/.zsh_plugins.txt \
            .config/zsh/local.zsh.example .config/git/config .config/git/ignore .config/starship.toml \
            .config/tmux/tmux.conf .config/mise/config.toml .config/atuin/config.toml \
            .config/chifig/Brewfile.core .config/chifig/npm-globals.txt; do

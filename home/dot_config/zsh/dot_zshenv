@@ -1,0 +1,6 @@
+# 每个 zsh 都读（含 `ssh host 'cmd'` 这种非交互非登录 shell）：只放 PATH 级的最小环境
+if [[ -z "$HOMEBREW_PREFIX" && -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+typeset -U path
+path=("$HOME/.local/bin" $path)

@@ -19,6 +19,14 @@ setup_file() {
   [ "$output" -le 12 ]
 }
 
+@test "non-interactive zsh (ssh host 'cmd') finds brew" {
+  [ -x /opt/homebrew/bin/brew ] || skip "no Homebrew at /opt/homebrew"
+  run env -i HOME="$DEST/home" PATH="/usr/bin:/bin:/usr/sbin:/sbin" zsh -c 'command -v brew'
+  echo "$output"
+  [ "$status" -eq 0 ]
+  [[ "$output" == */opt/homebrew/bin/brew ]]
+}
+
 @test "interactive zsh starts cleanly in temp HOME" {
   run env -i HOME="$DEST/home" ZDOTDIR="$DEST/home/.config/zsh" PATH="/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
       TERM=xterm-256color LANG=en_US.UTF-8 XDG_CACHE_HOME="$BATS_FILE_TMPDIR/cache" \
