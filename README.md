@@ -30,7 +30,7 @@ CHIFIG_INIT_ARGS='--promptString git.name=Chi --promptString git.email=me@exampl
 | gui | 关 | GUI 应用清单 `Brewfile.gui`（Cursor、VS Code、Zed、Raycast、Karabiner、Obsidian、Docker、Claude） | `just gui` |
 | fish | 关 | fish 配置 + `brew fish`（与 zsh 共用同一批工具） | |
 | macos | 关 | `defaults write` 系统偏好脚本 | `just macos` |
-| keyboard | 关 | Windows 键盘修饰键重映射：Alt→Cmd、Win→Ctrl（hidutil + LaunchAgent，不装驱动；本机键盘 ID 写 `~/.config/chifig/keyboard.local`） | `just keyboard [apply\|reset\|status\|list]` |
+| keyboard | 关 | Windows 键盘修饰键重映射：Alt→Cmd、Win→Option（hidutil + LaunchAgent，不装驱动；本机键盘 ID 写 `~/.config/chifig/keyboard.local`） | `just keyboard [apply\|reset\|status\|list]` |
 
 改开关：`chezmoi edit-config` 改 `[data.modules]`，然后 `chezmoi apply`。关掉的模块文件不会落地。
 

@@ -62,15 +62,15 @@ STUB
   ! grep -qE '(^|[;&| ])sudo ' "$REPO/home/dot_config/chifig/executable_keyboard-remap.sh"
 }
 
-@test "keyboard-remap apply maps Alt->Cmd and Win->Ctrl on both sides" {
+@test "keyboard-remap apply maps Alt->Cmd and Win->Option on both sides" {
   kbd_setup
   run env HOME="$KB/home" PATH="$KB/bin:$PATH" bash "$REPO/home/dot_config/chifig/executable_keyboard-remap.sh" apply
   [ "$status" -eq 0 ] || { echo "$output"; return 1; }
   json="$(grep UserKeyMapping "$KB/calls")"
   [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E2,"HIDKeyboardModifierMappingDst":0x7000000E3'* ]]
-  [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E3,"HIDKeyboardModifierMappingDst":0x7000000E0'* ]]
+  [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E3,"HIDKeyboardModifierMappingDst":0x7000000E2'* ]]
   [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E6,"HIDKeyboardModifierMappingDst":0x7000000E7'* ]]
-  [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E7,"HIDKeyboardModifierMappingDst":0x7000000E4'* ]]
+  [[ "$json" == *'"HIDKeyboardModifierMappingSrc":0x7000000E7,"HIDKeyboardModifierMappingDst":0x7000000E6'* ]]
   ! grep -q -- '--matching' "$KB/calls"
 }
 
@@ -84,11 +84,11 @@ STUB
 
 @test "keyboard-remap scopes to one keyboard when keyboard.local sets IDs" {
   kbd_setup
-  printf 'KBD_VENDOR_ID=0x046d\nKBD_PRODUCT_ID=0xc52b\nCTRL_TO_OPTION=1\n' > "$KB/home/.config/chifig/keyboard.local"
+  printf 'KBD_VENDOR_ID=0x046d\nKBD_PRODUCT_ID=0xc52b\n' > "$KB/home/.config/chifig/keyboard.local"
   run env HOME="$KB/home" PATH="$KB/bin:$PATH" FAKE_KBD="Apple Internal Keyboard" \
     bash "$REPO/home/dot_config/chifig/executable_keyboard-remap.sh" apply
   [ "$status" -eq 0 ] || { echo "$output"; return 1; }
   grep -qx -- '--matching' "$KB/calls"
   grep -q '"VendorID":0x046d,"ProductID":0xc52b' "$KB/calls"
-  grep -q '"HIDKeyboardModifierMappingSrc":0x7000000E0,"HIDKeyboardModifierMappingDst":0x7000000E2' "$KB/calls"
+  grep -q '"HIDKeyboardModifierMappingSrc":0x7000000E3,"HIDKeyboardModifierMappingDst":0x7000000E2' "$KB/calls"
 }
